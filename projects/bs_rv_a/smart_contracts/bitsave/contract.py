@@ -1,6 +1,9 @@
-from puyapy import ARC4Contract, Bytes, LocalState, Txn, UInt64, arc4, itxn, subroutine
+from puyapy import ARC4Contract, Bytes, LocalState, Txn, UInt64, arc4, itxn
 
-from smart_contracts.program.ChildApprovalHex import BITSAVE_CHILD_WORLD_APPROVAL_HEX, BITSAVE_CHILD_WORLD_CLEAR
+from smart_contracts.program.ChildApprovalHex import (
+    BITSAVE_CHILD_WORLD_APPROVAL_HEX,
+    BITSAVE_CHILD_WORLD_CLEAR,
+)
 
 
 class Bitsave(ARC4Contract):
@@ -11,7 +14,6 @@ class Bitsave(ARC4Contract):
     def hello(self, name: arc4.String) -> arc4.String:
         return "Hello, " + name
 
-    @arc4.abimethod()
     def optin(self) -> UInt64:
         """
         Optin now concerns with deploying and saving child contract for user
@@ -26,10 +28,22 @@ class Bitsave(ARC4Contract):
         # deploy child contract
         self.users_app_id[Txn.sender] = (
             itxn.ApplicationCall(
-            approval_program=Bytes.from_hex(BITSAVE_CHILD_WORLD_APPROVAL_HEX),
-            clear_state_program=BITSAVE_CHILD_WORLD_CLEAR
-            ).submit().created_app.application_id
+                approval_program=Bytes.from_hex(BITSAVE_CHILD_WORLD_APPROVAL_HEX),
+                clear_state_program=BITSAVE_CHILD_WORLD_CLEAR,
+            )
+            .submit()
+            .created_app.application_id
         )
         return self.users_app_id[Txn.sender]
 
+    @arc4.abimethod()
+    def create_savings(self) -> arc4.Bool:
+        return arc4.Bool(value=False)
 
+    @arc4.abimethod()
+    def increment_savings(self) -> arc4.UInt256:
+        return arc4.UInt256(0)
+
+    @arc4.abimethod()
+    def withdraw_savings(self) -> arc4.Bool:
+        return arc4.Bool(value=False)
