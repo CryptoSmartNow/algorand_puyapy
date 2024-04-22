@@ -14,6 +14,9 @@ To learn more about algokit, visit [documentation](https://github.com/algorandfo
 
 ### GitHub Codespaces
 
+# Challenges 
+https://xpan.notion.site/Algorand-bitsave-7a0ef0027027453f945b2d0e845f558a
+
 If executing this repository in GitHub Codespaces, the container will automatically cleanup templatized content and pre-install `algokit` for you. To get started execute:
 
 - `algokit init` - to invoke interactive wizard to guide you through the process of creating a new AlgoKit project
